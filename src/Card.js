@@ -1,33 +1,40 @@
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux';
 
-import { createdic, removedic } from './redux/modules/dic'
+import { createdic, loadDicFB, removedic, removeDicFB, checkDicFB } from './redux/modules/dic'
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 export default function Card({ arrdata }) {
+    const [check, setCheck] = useState(arrdata.dchek)
+
     const dispatch = useDispatch();
 
     let nav = useNavigate();
 
-    // console.log(arrdata)
-
     function checKing() {
-
+        dispatch(checkDicFB(arrdata))
+        // console.log(arrdata.dchek)
+        // setCheck(arrdata.dchek)
     }
 
-    // function goDetail() {
-    //     nav('/detail' + props.rdata)
-    // }
+    function reUpCard() {
+        nav('/cardrename/' + arrdata.dindx)
+    }
 
     function delCard() {
-
+        dispatch(removeDicFB(arrdata))
     }
 
+    useEffect(()=>{
+        // console.log(arrdata)
+    }, [])
+
     return (
-        <CardBox>
+        <CardBox check={check}>
             <Btns>
                 <Btn onClick={delCard}>3</Btn>
-                {/* <Btn onClick={goDetail}>2</Btn> */}
+                <Btn onClick={reUpCard}>2</Btn>
                 <Btn onClick={checKing}>1</Btn>
             </Btns>
 
@@ -48,7 +55,9 @@ const CardBox = styled.div`
     height: 300px;
     margin: 20px;
     border-radius: 20px;
-    background-color: #6b6;
+    /* background-color: #6b6; */
+
+    background-color: ${(props)=>(props.check == false ? '#6b6' : '#676')}
 
 `
 

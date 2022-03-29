@@ -8,17 +8,15 @@ import styled from 'styled-components'
 import { addDicFB, removedic } from './redux/modules/dic';
 
 export default function Detail() {
-    
+
 
     let ind = useParams().index;
-
-    let pdata = useParams().index;
 
     let nameInput = useRef();
     let descInput = useRef();
     let examInput = useRef();
 
-    // console.log(pdata)
+    // console.log(ind)
 
     // onkeydown = (e) => (e.key >= 0 ? console.log(nameInput) : null)
 
@@ -28,12 +26,7 @@ export default function Detail() {
 
     function crevent() {
         // console.log(nameInput.current.value)
-        let dic = {dname : nameInput.current.value, ddesc : descInput.current.value, dexam : examInput.current.value, dindx : ind}
-        // dispatch(createdic(dic));
-
-        // nameInput.current.value = ''
-        // descInput.current.value = ''
-        // examInput.current.value = ''
+        let dic = { dname: nameInput.current.value, ddesc: descInput.current.value, dexam: examInput.current.value, dindx: ind, dchek: false }
 
         console.log(dic)
 
@@ -44,11 +37,12 @@ export default function Detail() {
     function BackHome() {
         nav('/')
     }
-    
+
     let db_data_list = []
 
-    useEffect(async () => {
+    useEffect(() => {
         // let query = await getDocs(collection(db, 'mydicts'))
+        console.log(ind)
 
         // query.forEach((v) => {
         //     let doc_id = v.id
@@ -70,25 +64,12 @@ export default function Detail() {
         // console.log(db_data_list)
 
 
-        //컬렉션 없으면 생성
-        // let week_arr = ['일', '월', '화', '수', '목', '금', '토']
-        // week_arr.map((v)=>{
-        //     console.log(v)
-        //     addDoc(collection(db, 'mydicts'), {week: v, score: 0})
-        // })
-
-
 
         // 삭제
-        // if (query.docs[0] !== undefined) {
-        //     console.log(query.docs[0].id)
-        //     const docRef = doc(db, 'mydicts', query.docs[0].id)
-        //     // deleteDoc(docRef)
-        // }
 
         // query.docs.map((v)=>{
         //     const docRef = doc(db, 'mydicts', v.id)
-            
+
         //     deleteDoc(docRef)
         // })
 
@@ -123,38 +104,31 @@ export default function Detail() {
         //     console.log(doc.id)
         // })
 
-
-
-
-        // let f = db_data_list.find((v) => v.week === thisDay.weekDay)
-        // console.log(f)
-        // console.log(db_data_list[0])
-
     });
 
     return (
-        <Test>
+        <Wrap>
             <CardBox>
                 <Inputs>
-                    <p>단어</p><Input ref={nameInput}/>
-                    <p>해석</p><Input ref={descInput}/>
-                    <p>예시</p><Input ref={examInput}/>
+                    <p>단어</p><Input ref={nameInput} />
+                    <p>해석</p><Input ref={descInput} />
+                    <p>예시</p><Input ref={examInput} />
                 </Inputs>
 
-            <ButtonSet>
-                <New_btn onClick={crevent}>만들기 !</New_btn>
-                <New_btn onClick={BackHome}>취소 !</New_btn>
-                {/* <button onClick={rmevent}>remove</button> */}
+                <ButtonSet>
+                    <New_btn onClick={crevent}>만들기 !</New_btn>
+                    <New_btn onClick={BackHome}>취소 !</New_btn>
+                    {/* <button onClick={rmevent}>remove</button> */}
                 </ButtonSet>
             </CardBox>
 
-        </Test>
+        </Wrap>
     )
 }
 
 
 
-const Test = styled.div`
+const Wrap = styled.div`
     width: 100vw;
     height: 100vh;
 
@@ -163,7 +137,6 @@ const Test = styled.div`
 
     align-items: center;
     justify-content: center;
-    background-color: #555;
 `
 
 
@@ -172,6 +145,7 @@ const CardBox = styled.div`
     width: 400px;
     height: 800px;
     
+    margin-top: 100px;
     border-radius: 20px;
     background-color: #6b6;
 

@@ -1,60 +1,56 @@
-import React, { useState } from "react"
+import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import styled from 'styled-components'
 
-import { loaddic, loadDicFB } from './redux/modules/dic';
+import { loadDicFB } from './redux/modules/dic';
 import Card from "./Card"
-import { collection, getDocs } from "firebase/firestore";
-import { db } from './firebase';
 
 export default function Home(props) {
 
     const data = useSelector((state) => state.storedic.list)
-    const [arr, setArr] = useState([])
 
     let nav = useNavigate()
 
-    let abc = []
+    const dispatch = useDispatch();
 
     function goDetail() {
-        nav('/detail/' + arr.length)
+
+        let index = 0
+
+        data.map((v) => {
+            index = index < v.dindx ? v.dindx : index
+        })
+
+        console.log(index)
+
+        // index = data.length == 0 ? 0 : (parseInt(data[data.length-1].dindx) + 1)
+
+        nav('/detail/' + (parseInt(index) + 1))
     }
 
-    React.useEffect(async () => {
-
-        const query = await getDocs(collection(db, 'mydicts'))
-        // console.log(query)
-
-        query.forEach((doc) => {
-            // console.log(...arr, doc)
-            let a = { arr, ...doc.data() }
-            abc.push(doc.data())
-            // console.log(a)
-            // setArr(abc)
-        })
-
-        // console.log('->', arr, cc, abc)
-
-        abc.map((v, i)=>{
-            abc.findIndex((v, i)=>{
-                console.log()
-            })
-        })
-
-        setArr(abc)
-
+    React.useEffect(() => {
+        dispatch(loadDicFB())
     }, [])
+
+    // console.log(data)
 
     return (
         <CardContainer>
-            <Head>안녕</Head>
-            {arr.length == 0 ? console.log('?') : arr.map((v, i) => {
-                return <Card key={i} arrdata={arr[i]}>
-                    <div>{arr[i].dname}</div>
-                    <div>{arr[i].ddesc}</div>
-                    <div>{arr[i].dexam}</div>
+            {data.length == undefined ? console.log('?') : data.map((v, i) => {
+                let idx = data.findIndex((w) => {
+                    // console.log('d:', v.dname, 'v:', v.dchek, 'w:', w.dchek)
+                    // console.log(data)
+                    console.log(i, w.dindx, v.dindx)
+                    return w.dindx == v.dindx
+                })
+
+                if (idx == -1) return null
+                return <Card key={i} arrdata={data[idx]}>
+                    <div>{data[idx].dname}</div>
+                    <div>{data[idx].ddesc}</div>
+                    <div>{data[idx].dexam}</div>
                 </Card>
             })}
 
@@ -62,17 +58,6 @@ export default function Home(props) {
         </CardContainer>
     )
 }
-
-
-const Head = styled.div`
-    width: 100vw;
-    height: 100px;
-    position: fixed;
-    font-size: 50px;
-
-    top: 0px;
-    background-color: #ddd;
-`
 
 
 const CardContainer = styled.div`
@@ -85,8 +70,6 @@ const CardContainer = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    
-    background-color: #555;
 `
 
 const AddCard = styled.button`
