@@ -13,6 +13,7 @@ import Home from './Home'
 import Write from './Detail'
 
 function App() {
+  
   return (
     <Provider store={store}>
       <BrowserRouter>

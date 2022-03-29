@@ -9,35 +9,41 @@ const REMOVE = 'dic/REMOVE';
 
 
 const initialState = {
-    
-    list: {
+    list: [{
         name: 'abcd',
-        desc: 'desc',
-        exam: 'exam',
+        desc: 'desc1',
+        exam: 'exam1',
         check: false,
         index: 0
-    }
+    }, {
+        name: 'efgh',
+        desc: 'desc2',
+        exam: 'exam2',
+        check: false,
+        index: 1
+    }]
 }
 
 
 
 export function loadDic(dic) {
+    console.log('load:', dic)
     return { type: LOAD, dic }
 }
 
-export function createdic(dic) {
+export function createDic(dic) {
     return { type: CREATE, dic }
 }
 
-export function checkdic(dic) {
+export function checkDic(dic) {
     return { type: CHECK, dic }
 }
 
-export function updatedic(dic) {
+export function updateDic(dic) {
     return { type: UPDATE, dic }
 }
 
-export function removedic(dic) {
+export function removeDic(dic) {
     return { type: REMOVE, dic }
 }
 
@@ -46,22 +52,25 @@ export function removedic(dic) {
 
 
 export const loadDicFB = () => {
-    return async function () {
+    return async function (dispatch) {
+        console.log('loadFB')
+        dispatch(loadDic())
     }
 }
 
-export const addDicFB = () => {
-    return async function () {
+export const addDicFB = (dic) => {
+    return async function (dispatch) {
+
     }
 }
 
-export const checkDicFB = () => {
-    return async function () {
+export const checkDicFB = (dic) => {
+    return async function (dispatch) {
     }
 }
 
-export const removeDicFB = () => {
-    return async function () {
+export const removeDicFB = (dic) => {
+    return async function (dispatch) {
     }
 }
 
@@ -71,21 +80,29 @@ export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
         
         case LOAD: {
-            
+            // state = initialState;
+            console.log('rdc-LOAD')
+            console.log('state:',state)
+            const new_list = state
+            return { list: action }
         }
         case CREATE: {
+            console.log('rdc-CREATE')
             
         }
 
         case CHECK: {
+            console.log('rdc-CHECK')
 
         }
 
         case UPDATE: {
+            console.log('rdc-UPDATE')
 
         }
 
         case REMOVE: {
+            console.log('rdc-REMOVE')
 
         }
         default: return null
