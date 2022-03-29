@@ -2,10 +2,10 @@
 
 
 
-export default function Card() {
+export default function Home() {
     return (
         <div>
-            card
+            home
         </div>
     )
 }
