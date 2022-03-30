@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 
 import Home from './Home'
 import Write from './Detail'
+import ReWrite from './ReWrite';
 
 function App() {
   
@@ -22,7 +23,8 @@ function App() {
           <Container>
             <Routes>
               <Route path='/' element={<Home />}></Route>
-              <Route path='/write' element={<Write />}></Route>
+              <Route path='/write/:index' element={<Write />}></Route>
+              <Route path='/rewrite/:index' element={<ReWrite />}></Route>
             </Routes>
           </Container>
         </div>

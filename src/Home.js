@@ -6,30 +6,39 @@ import styled from 'styled-components'
 import Card from './Card'
 import { loadDicFB } from './rdxmod'
 
-
-
 export default function Home() {
 
-    const rdxData = useSelector((sel)=>sel)
+    const rdxData = useSelector((sel) => sel.storedic.list)
 
     const dispatch = useDispatch()
 
-    console.log('home:', rdxData)
-
     const nav = useNavigate()
 
+    console.log('home:', rdxData)
+
     function goWrite() {
-        nav('/write')
+        let iarr = rdxData.map((v) => {
+            return (v.index)
+        })
+
+        if (iarr.length === 0)
+            iarr = [0]
+        else
+            iarr.sort((a, b) => b - a)
+
+        nav('/write/' + (parseInt(iarr[0]) + 1))
     }
 
-    useEffect(()=>{
-        dispatch(loadDicFB())
+    useEffect(() => {
+        // dispatch(loadDicFB())
     }, [])
 
     return (
         <CardContainer>
-            <Card></Card>
-            <AddCard onClick={goWrite}/>
+            {rdxData.map((v, i) => {
+                return <Card key={i} rData={v} />
+            })}
+            <AddCard onClick={goWrite} />
         </CardContainer>
     )
 }

@@ -1,23 +1,45 @@
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { checkDicFB, removeDicFB, updateDicFB } from './rdxmod'
 
 
 
-export default function Card() {
+export default function Card({ rData }) {
+    const [check, setCheck] = useState(rData.check)
+
+    const dispatch = useDispatch()
 
     let nav = useNavigate()
 
+    console.log(check)
+
+    function deleteEvent() {
+        dispatch(removeDicFB(rData))
+    }
+
+    function re_write() {
+        nav('/rewrite/' + rData.index, rData)
+        // dispatch(updateDicFB(rData))
+    }
+
+    function checkEvent() {
+        dispatch(checkDicFB(rData))
+        setCheck(!rData.check)
+    }
+
     return (
-        <CardBox>
+        <CardBox check={check}>
             <Btns>
-                <Btn></Btn>
-                <Btn></Btn>
-                <Btn></Btn>
+                <Btn onClick={deleteEvent}></Btn>
+                <Btn onClick={re_write}></Btn>
+                <Btn onClick={checkEvent}></Btn>
             </Btns>
             <Desk>
-                <DeskLine>a</DeskLine>
-                <DeskLine>b</DeskLine>
-                <DeskLine>c</DeskLine>
+                <DeskLine>단어 : {rData.name}</DeskLine>
+                <DeskLine>설명 : {rData.desc}</DeskLine>
+                <DeskLine><span style={{color:'#33f'}}>예시 : {rData.exam}</span></DeskLine>
             </Desk>
         </CardBox>
     )
@@ -43,7 +65,7 @@ const Btns = styled.div`
 `
 
 const Btn = styled.button`
-    width: 60px;
+    width: 30px;
     height: 30px;
     margin: 10px;
 

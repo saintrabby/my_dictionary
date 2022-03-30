@@ -1,9 +1,22 @@
-import { useNavigate } from 'react-router-dom'
+import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { addDicFB } from './rdxmod';
 
 
 
 export default function Write() {
+
+    const param = useParams()
+
+    console.log(param)
+
+    let nameref = useRef()
+    let descref = useRef()
+    let examref = useRef()
+
+    let dispatch = useDispatch()
 
     let nav = useNavigate();
 
@@ -11,17 +24,34 @@ export default function Write() {
         nav('/')
     }
 
+    function okEvent() {
+        // console.log(nameref.current.value)
+        // console.log(descref.current.value)
+        // console.log(examref.current.value)
+
+        let dic = {
+            name: nameref.current.value,
+            desc: descref.current.value,
+            exam: examref.current.value,
+            check: false,
+            index: parseInt(param.index)
+        }
+
+        dispatch(addDicFB(dic))
+        nav('/')
+    }
+
     return (
         <Wrap>
             <CardBox>
                 <Inputs>
-                    <Input></Input>
-                    <Input></Input>
-                    <Input></Input>
+                    <Input ref={nameref}></Input>
+                    <Input ref={descref}></Input>
+                    <Input ref={examref}></Input>
                 </Inputs>
 
                 <ButtonSet>
-                    <New_btn>ㅇ</New_btn>
+                    <New_btn onClick={okEvent}>ㅇ</New_btn>
                     <New_btn onClick={goBack}>취소</New_btn>
                 </ButtonSet>
             </CardBox>
@@ -50,7 +80,7 @@ const Wrap = styled.div`
 
 const CardBox = styled.div`
     width: 400px;
-    height: 800px;
+    height: 700px;
     
     margin-top: 100px;
     border-radius: 20px;
