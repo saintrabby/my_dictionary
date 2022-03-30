@@ -45,13 +45,13 @@ export default function Write() {
         <Wrap>
             <CardBox>
                 <Inputs>
-                    <Input ref={nameref}></Input>
-                    <Input ref={descref}></Input>
-                    <Input ref={examref}></Input>
+                    <DonDon>단어</DonDon><Input ref={nameref}></Input>
+                    <DonDon>해석</DonDon><Input ref={descref}></Input>
+                    <DonDon>예시</DonDon><Input ref={examref}></Input>
                 </Inputs>
 
                 <ButtonSet>
-                    <New_btn onClick={okEvent}>ㅇ</New_btn>
+                    <New_btn onClick={okEvent}>추가</New_btn>
                     <New_btn onClick={goBack}>취소</New_btn>
                 </ButtonSet>
             </CardBox>
@@ -105,6 +105,7 @@ const New_btn = styled.button`
     border-radius: 50px;
     border: 0px;
     margin: 100px 30px;
+    font-size: 20px;
 `
 
 
@@ -116,13 +117,16 @@ const Inputs = styled.div`
     margin-top: 50px;
 `
 
+const DonDon = styled.p`
+    font-size: 20px;
+`
+
 const Input = styled.input`
     width: 300px;
     height: 50px;
     font-size: 20px;
     border-radius: 20px;
     border: 0px;
-    margin-top: 60px;
     text-align: center;
     :focus { outline: none; }
 `

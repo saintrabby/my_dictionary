@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { checkDicFB, removeDicFB, updateDicFB } from './rdxmod'
+import { checkDicFB, loadDicFB, removeDicFB, updateDicFB } from './rdxmod'
 
 
 
@@ -13,15 +13,14 @@ export default function Card({ rData }) {
 
     let nav = useNavigate()
 
-    console.log(check)
+    // console.log('card:', rData)
 
     function deleteEvent() {
         dispatch(removeDicFB(rData))
     }
 
     function re_write() {
-        nav('/rewrite/' + rData.index, rData)
-        // dispatch(updateDicFB(rData))
+        nav('/rewrite/' + rData.index)
     }
 
     function checkEvent() {
@@ -30,7 +29,7 @@ export default function Card({ rData }) {
     }
 
     return (
-        <CardBox check={check}>
+        <CardBox check={rData.check}>
             <Btns>
                 <Btn onClick={deleteEvent}></Btn>
                 <Btn onClick={re_write}></Btn>
@@ -53,7 +52,6 @@ const CardBox = styled.div`
     height: 300px;
     margin: 20px;
     border-radius: 20px;
-    /* background-color: #6b6; */
 
     background-color: ${(props)=>(props.check == false ? '#6b6' : '#676')};
 
@@ -77,7 +75,7 @@ const Desk = styled.div`
     flex-direction: column;
     margin-top: 20px;
     float: left;
-    font-size: 20px;
+    font-size: 30px;
 `
 
 const DeskLine = styled.div`

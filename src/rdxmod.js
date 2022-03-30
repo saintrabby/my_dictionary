@@ -1,3 +1,5 @@
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import { db } from "./firebase";
 
 
 const LOAD = 'dic/LOAD';
@@ -9,26 +11,14 @@ const REMOVE = 'dic/REMOVE';
 
 
 const initialState = {
-    list: [{
-        name: 'abcd',
-        desc: 'desc1',
-        exam: 'exam1',
-        check: false,
-        index: 1
-    }, {
-        name: 'efgh',
-        desc: 'desc2',
-        exam: 'exam2',
-        check: false,
-        index: 2
-    }]
+    list: []
 }
 
 
 
-export function loadDic() {
-    console.log('load:')
-    return { type: LOAD }
+export function loadDic(dic) {
+    // console.log('load:')
+    return { type: LOAD, dic }
 }
 
 export function addDic(dic) {
@@ -53,35 +43,75 @@ export function removeDic(dic) {
 
 export const loadDicFB = () => {
     return async function (dispatch) {
+
+        const fbData = await getDocs(collection(db, 'mydicts'))
+
         console.log('loadFB')
-        dispatch(loadDic())
+        // console.log(fbData.docs)
+
+        const new_list = fbData.docs.map((v)=>{
+            const new_dic = {
+                ...v.data(),
+                id: v.id
+            }
+
+            return new_dic
+        })
+
+        // console.log(new_list)
+
+        dispatch(loadDic(new_list))
     }
 }
 
 export const addDicFB = (dic) => {
     return async function (dispatch) {
-        console.log('addFB', dic)
+
+        addDoc(collection(db, 'mydicts'), dic)
+
+        // console.log('addFB', dic)
+
         dispatch(addDic(dic))
     }
 }
 
 export const checkDicFB = (dic) => {
     return async function (dispatch) {
+
+        const docRef = await doc(db, 'mydicts', dic.id)
+        updateDoc(docRef, { check: !dic.check })
+
         console.log('checkFB', dic)
+
         dispatch(checkDic(dic))
     }
 }
 
 export const updateDicFB = (dic) => {
     return async function (dispatch) {
+
+        const docRef = await doc(db, 'mydicts', dic.id)
+        updateDoc(docRef, { 
+            name: dic.name,
+            desc: dic.desc,
+            exam: dic.exam
+         })
+
         console.log('updateFB', dic)
+
         dispatch(updateDic(dic))
     }
 }
 
 export const removeDicFB = (dic) => {
     return async function (dispatch) {
+
+        const docRef = await doc(db, 'mydicts', dic.id)
+        
+        deleteDoc(docRef)
+
         console.log('removeFB', dic)
+
         dispatch(removeDic(dic))
     }
 }
@@ -93,13 +123,14 @@ export default function reducer(state = initialState, action = {}) {
 
         case LOAD: {
             // state = initialState;
-            console.log('rdc-LOAD')
-            console.log('state:', state)
-            const new_list = state
+            // console.log('rdc-LOAD')
+            console.log('state:', action.dic)
+            const new_list = action.dic
             return { list: new_list }
         }
+        
         case CREATE: {
-            console.log('rdc-CREATE')
+            // console.log('rdc-CREATE')
             let new_dic = {
                 name: action.dic.name,
                 desc: action.dic.desc,
@@ -108,14 +139,14 @@ export default function reducer(state = initialState, action = {}) {
                 index: action.dic.index
             }
             const new_list = [...state.list, new_dic]
-            console.log(new_list)
+            // console.log(new_list)
 
             return { list: new_list }
         }
 
         case CHECK: {
             console.log('rdc-CHECK')
-            console.log(action.dic)
+            // console.log(action.dic)
             const new_list = state.list.map((v) => {
                 if (v.index == action.dic.index) {
                     let new_dic = {
@@ -126,14 +157,14 @@ export default function reducer(state = initialState, action = {}) {
                 return v
             })
 
-            console.log(new_list)
+            // console.log(new_list)
 
             return { list: new_list }
         }
 
         case UPDATE: {
-            console.log('rdc-UPDATE')
-            console.log(action.dic)
+            // console.log('rdc-UPDATE')
+            // console.log(action.dic)
 
             const new_list = state.list.map((v) => {
                 if (v.index == action.dic.index) {
@@ -148,15 +179,15 @@ export default function reducer(state = initialState, action = {}) {
                 else
                     return v
             })
-            console.log(new_list)
+            // console.log(new_list)
 
 
             return { list: new_list }
         }
 
         case REMOVE: {
-            console.log('rdc-REMOVE')
-            console.log(action.dic)
+            // console.log('rdc-REMOVE')
+            // console.log(action.dic)
             const new_list = state.list.filter((v) => {
                 return v.index != action.dic.index
             })

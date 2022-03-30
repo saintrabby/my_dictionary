@@ -19,7 +19,7 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <div className="App">
-          <Head></Head>
+          <Head>몰라다시해</Head>
           <Container>
             <Routes>
               <Route path='/' element={<Home />}></Route>

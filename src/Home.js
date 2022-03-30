@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { db } from './firebase'
 
 import Card from './Card'
 import { loadDicFB } from './rdxmod'
@@ -14,7 +15,7 @@ export default function Home() {
 
     const nav = useNavigate()
 
-    console.log('home:', rdxData)
+    // console.log('home:', rdxData)
 
     function goWrite() {
         let iarr = rdxData.map((v) => {
@@ -29,8 +30,10 @@ export default function Home() {
         nav('/write/' + (parseInt(iarr[0]) + 1))
     }
 
+    
+
     useEffect(() => {
-        // dispatch(loadDicFB())
+        dispatch(loadDicFB())
     }, [])
 
     return (
@@ -70,9 +73,4 @@ const AddCard = styled.button`
     right: 0px;
     bottom: 0px;
     margin: 20px;
-`
-
-const Test = styled.div`
-    font-size: 10px;
-    background-color: #fff;
 `
