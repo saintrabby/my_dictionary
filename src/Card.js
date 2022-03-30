@@ -7,13 +7,10 @@ import { checkDicFB, loadDicFB, removeDicFB, updateDicFB } from './rdxmod'
 
 
 export default function Card({ rData }) {
-    const [check, setCheck] = useState(rData.check)
 
     const dispatch = useDispatch()
 
     let nav = useNavigate()
-
-    // console.log('card:', rData)
 
     function deleteEvent() {
         dispatch(removeDicFB(rData))
@@ -25,20 +22,25 @@ export default function Card({ rData }) {
 
     function checkEvent() {
         dispatch(checkDicFB(rData))
-        setCheck(!rData.check)
     }
+
+    const onRemove = () => {
+        if (window.confirm("정말 삭제할까요?")) {
+            deleteEvent()
+        }
+    };
 
     return (
         <CardBox check={rData.check}>
             <Btns>
-                <Btn onClick={deleteEvent}></Btn>
-                <Btn onClick={re_write}></Btn>
-                <Btn onClick={checkEvent}></Btn>
+                <Btn onClick={onRemove}>X</Btn>
+                <Btn onClick={re_write}>/</Btn>
+                <Btn onClick={checkEvent}>V</Btn>
             </Btns>
             <Desk>
                 <DeskLine>단어 : {rData.name}</DeskLine>
                 <DeskLine>설명 : {rData.desc}</DeskLine>
-                <DeskLine><span style={{color:'#33f'}}>예시 : {rData.exam}</span></DeskLine>
+                <DeskLine><span style={{ color: '#33f' }}>예시 : {rData.exam}</span></DeskLine>
             </Desk>
         </CardBox>
     )
@@ -53,7 +55,7 @@ const CardBox = styled.div`
     margin: 20px;
     border-radius: 20px;
 
-    background-color: ${(props)=>(props.check == false ? '#6b6' : '#676')};
+    background-color: ${(props) => (props.check == false ? '#6b6' : '#676')};
 
 `
 
@@ -66,6 +68,10 @@ const Btn = styled.button`
     width: 30px;
     height: 30px;
     margin: 10px;
+    border: 0px;
+    border-radius: 20px;
+    
+    background-color: #282;
 
     float: right;
 `

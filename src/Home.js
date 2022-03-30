@@ -11,11 +11,11 @@ export default function Home() {
 
     const rdxData = useSelector((sel) => sel.storedic.list)
 
+    // console.log(rdxData)
+
     const dispatch = useDispatch()
 
     const nav = useNavigate()
-
-    // console.log('home:', rdxData)
 
     function goWrite() {
         let iarr = rdxData.map((v) => {
@@ -29,8 +29,6 @@ export default function Home() {
 
         nav('/write/' + (parseInt(iarr[0]) + 1))
     }
-
-    
 
     useEffect(() => {
         dispatch(loadDicFB())

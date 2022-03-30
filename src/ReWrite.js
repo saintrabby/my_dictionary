@@ -18,17 +18,14 @@ export default function ReWrite(props) {
 
     const rdxData = store.getState().storedic.list
 
-    const param = useParams()
+    console.log(rdxData)
 
-    console.log(rdxData, param)
+    const param = useParams()
 
     function rewrite() {
         let new_data = rdxData.filter((v)=>{
-            console.log(v.index, param.index)
             return v.index == param.index
         })
-
-        console.log(new_data[0])
 
         let new_dic = {
             name: nameref.current.value,
@@ -64,9 +61,9 @@ export default function ReWrite(props) {
                     })}
                 </OldData>
                 <Inputs>
-                    <DonDon>바꿀단어</DonDon><Input ref={nameref}></Input>
-                    <DonDon>바꿀해석</DonDon><Input ref={descref}></Input>
-                    <DonDon>바꿀예시</DonDon><Input ref={examref}></Input>
+                    <DonDon>바꿀단어</DonDon><Input ref={nameref} type='text' maxlength='25'></Input>
+                    <DonDon>바꿀해석</DonDon><Input ref={descref} type='text' maxlength='25'></Input>
+                    <DonDon>바꿀예시</DonDon><Input ref={examref} type='text' maxlength='25'></Input>
                 </Inputs>
                 <ButtonSet>
                     <New_btn onClick={rewrite}>수정</New_btn>
@@ -119,7 +116,7 @@ const OldData = styled.div`
 
 
 const DonDon = styled.p`
-    font-size: 20px;
+    font-size: 18px;
 `
 
 
@@ -139,6 +136,8 @@ const Input = styled.input`
     border-radius: 20px;
     border: 0px;
     text-align: center;
+    
+    
     :focus { outline: none; }
 `
 

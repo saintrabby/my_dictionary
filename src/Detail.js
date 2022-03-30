@@ -10,8 +10,6 @@ export default function Write() {
 
     const param = useParams()
 
-    console.log(param)
-
     let nameref = useRef()
     let descref = useRef()
     let examref = useRef()
@@ -25,10 +23,7 @@ export default function Write() {
     }
 
     function okEvent() {
-        // console.log(nameref.current.value)
-        // console.log(descref.current.value)
-        // console.log(examref.current.value)
-
+        
         let dic = {
             name: nameref.current.value,
             desc: descref.current.value,
