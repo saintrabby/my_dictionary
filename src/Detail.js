@@ -43,7 +43,6 @@ export default function Detail() {
     useEffect(() => {
         // let query = await getDocs(collection(db, 'mydicts'))
         console.log(ind)
-
         // query.forEach((v) => {
         //     let doc_id = v.id
         //     let dname = v.data().dname
