@@ -14,7 +14,7 @@ export default function Card({ arrdata }) {
 
     function checKing() {
         dispatch(checkDicFB(arrdata))
-        
+    
         // setCheck(arrdata.dchek)
     }
 

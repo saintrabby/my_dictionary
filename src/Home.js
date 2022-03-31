@@ -34,6 +34,7 @@ export default function Home(props) {
         dispatch(loadDicFB())
     }, [])
 
+    
     return (
         <CardContainer>
             {data.length == undefined ? console.log('?') : data.map((v, i) => {

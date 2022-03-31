@@ -49,8 +49,6 @@ export default function Detail() {
         //     let ddesc = v.data().ddesc
         //     let dexam = v.data().dexam
 
-        //     console.log(v)
-
         //     // let put = { doc_id, dname, ddesc, dexam }
 
         //     // db_data_list.unshift(put)
