@@ -1,5 +1,3 @@
-/d:/Users/Indang/Documents/react99/my_dictionary/src/ABC.js
-/d:/Users/Indang/Documents/react99/my_dictionary/src/firebase.js
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
@@ -25,3 +23,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 node_modules
+/src/ABC.js
+/src/firebase.js
